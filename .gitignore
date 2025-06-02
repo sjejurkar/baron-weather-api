@@ -43,3 +43,9 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# data files
+*.tiff
+*.geojson
+*.png
+*.tiff.aux.xml

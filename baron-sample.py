@@ -280,7 +280,7 @@ def request_wms(product, product_config, image_size_in_pixels, image_bounds):
     # Convert the image bounds to a comma-separated string.
     image_bounds = ','.join(str(x) for x in image_bounds)
 
-    wms_url = '{}/{}/wms/{}/{}?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&CRS={}&LAYERS={}&BBOX={}&WIDTH={}&HEIGHT={}'.format(
+    wms_url = '{}/{}/wms/{}/{}?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&CRS={}&LAYERS={}&BBOX={}&WIDTH={}&HEIGHT={}&TIME={}'.format(
         host,
         access_key,
         product,
@@ -289,7 +289,8 @@ def request_wms(product, product_config, image_size_in_pixels, image_bounds):
         product_instance_time,
         image_bounds,
         image_size_in_pixels[0],
-        image_size_in_pixels[1]
+        image_size_in_pixels[1],
+        product_instance_time
     )
     wms_url = sign_request(wms_url, access_key, access_key_secret)
     print(wms_url)
@@ -386,7 +387,8 @@ def point_query_region(product, product_config, region_bounds):
 
 
 def main():
-    texas_bound_box = [-106.645646, 36.500704, -93.508292, 25.837164]
+    # texas_bound_box = [-106.645646, 36.500704, -93.508292, 25.837164]
+    texas_bound_box = [25.837164, -106.645646, 36.500704, -93.508292]
     arkansas_bound_box = [-94.724121, 32.512896, -89.428711, 36.576877]
     usa_bound_box = [-125.859375, 25.618963, -63.193359, 49.378416]
     temp_bound_box = [-106.645646, 36.500704, -105.808292, 35.837164]
@@ -394,8 +396,8 @@ def main():
     tx_panhandle_bound_box = [-103.05, 34.65, -99.99, 36.53]
 
     print("WMS...2: Fire Tracker US")
-    request_wms('fire-tracker-us', 'Standard-Geodetic',
-                [2048, 1024], tx_panhandle_bound_box)
+    request_wms('flash-flood-risk', 'Standard-Geodetic',
+                [2048, 1024], texas_bound_box)
 
     # print("Point Query Region...1: Flash Flood Risk")
     # point_query_region('fire-hotspot-us', 'Standard-Geodetic', temp_bound_box)
